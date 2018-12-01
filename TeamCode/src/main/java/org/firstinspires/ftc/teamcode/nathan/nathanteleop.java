@@ -1,5 +1,4 @@
-package org.firstinspires.ftc.teamcode.cole;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+package org.firstinspires.ftc.teamcode.nathan;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -23,7 +22,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="nathanteleop", group="Iterative Opmode")
+@TeleOp(name="nathanteleop2", group="Iterative Opmode")
 //@Disabled
 public class nathanteleop extends OpMode
 {
@@ -34,7 +33,7 @@ public class nathanteleop extends OpMode
     private DcMotor lift = null;
     private DcMotor fBucket = null;
     private CRServo collection = null;
-    private Servo bucket = null;
+    private CRServo bucket = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -49,7 +48,7 @@ public class nathanteleop extends OpMode
         left = hardwareMap.get(DcMotor.class, "left");
         right = hardwareMap.get(DcMotor.class, "right");
         lift = hardwareMap.get(DcMotor.class, "lift");
-        bucket = hardwareMap.get(Servo.class, "bucket");
+        bucket = hardwareMap.crservo.get("bucket");
         fBucket = hardwareMap.get(DcMotor.class, "fBucket");
         fBucket.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -58,8 +57,8 @@ public class nathanteleop extends OpMode
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
-        left.setDirection(DcMotor.Direction.FORWARD);
-        right.setDirection(DcMotor.Direction.FORWARD);
+        left.setDirection(DcMotor.Direction.REVERSE);
+        right.setDirection(DcMotor.Direction.REVERSE);
         lift.setDirection(DcMotor.Direction.FORWARD);
         fBucket.setDirection(DcMotor.Direction.FORWARD);
 
@@ -78,7 +77,6 @@ public class nathanteleop extends OpMode
      */
     @Override
     public void init_loop() {
-        bucket.setPosition(0);
     }
 
     /*
@@ -119,27 +117,32 @@ public class nathanteleop extends OpMode
         // - This uses basic math to combine motions and is easier to drive straight.
         double forward =  gamepad1.left_stick_y;
         double turn  =  gamepad1.right_stick_x;
-        double collect = gamepad2.right_stick_y;
-        double fBPower = gamepad2.left_stick_y;
-        left.setPower(Range.clip(forward + turn, -1.0, 1.0));
-        right.setPower(Range.clip(forward - turn, -1.0, 1.0));
+        double collect = gamepad2.left_stick_y;
+        double fBPower = gamepad2.right_stick_y;
+        left.setPower(Range.clip(forward - turn, -1.0, 1.0));
+        right.setPower(Range.clip(forward + turn, -1.0, 1.0));
         collection.setPower(0.75*(Range.clip(collect, -1.0, 1.0)));
         fBucket.setPower(0.5*(Range.clip(fBPower, -1.0, 1.0)));
 
 
         if(gamepad2.dpad_up)
-            lift.setPower(-1);
-        else if(gamepad2.dpad_down)
             lift.setPower(1);
+        else if(gamepad2.dpad_down)
+            lift.setPower(-1);
         else
             lift.setPower(0);
 
 
-        if (gamepad2.a)
-            bucket.setPosition(0);
+//        if (gamepad2.a)
+//            bucket.setPosition(2);
+//        if (gamepad2.b)
+//            bucket.setPosition(0);
         if (gamepad2.b)
-            bucket.setPosition(0.8);
-
+            bucket.setPower(1);
+        else if (gamepad2.a)
+            bucket.setPower(-1);
+        else
+            bucket.setPower(0);
         // Tank Mode uses one stick to control each wheel.
         // - This requires no math, but it is hard to drive forward slowly and keep straight.
         // leftPower  = -gamepad1.left_stick_y ;
@@ -147,11 +150,13 @@ public class nathanteleop extends OpMode
 
 
         // Show the elapsed game time and wheel power.
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Motors", "left (%.2f), right (%.2f)");
+//        telemetry.addData("Status", "Run Time: " + runtime.toString());
+//        telemetry.addData("Motors", "left (%.2f), right (%.2f)");
+        telemetry.addData("Lift Encoder", lift.getCurrentPosition());
+        telemetry.update();
     }
 
-    /*
+    /*;
      * Code to run ONCE after the driver hits STOP
      */
     @Override

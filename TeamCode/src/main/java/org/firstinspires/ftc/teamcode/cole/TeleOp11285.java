@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.cole;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 /**
  * Created by student on 11/29/18.
  */
 
+@TeleOp(name="11285 TeleOp")
 public class TeleOp11285 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.noah;
+package org.firstinspires.ftc.teamcode.nathan;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -18,9 +18,9 @@ public class Auto1 extends LinearOpMode{
     private DcMotor lift = null;
     private DcMotor fBucket = null;
     private CRServo collection = null;
-    private Servo bucket = null;
+    private CRServo bucket = null;
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
 
         telemetry.addData("Status", "Initialized");
 
@@ -30,9 +30,10 @@ public class Auto1 extends LinearOpMode{
         left = hardwareMap.get(DcMotor.class, "left");
         right = hardwareMap.get(DcMotor.class, "right");
         lift = hardwareMap.get(DcMotor.class, "lift");
-        bucket = hardwareMap.get(Servo.class, "bucket");
+        bucket = hardwareMap.crservo.get("bucket");
         fBucket = hardwareMap.get(DcMotor.class, "fBucket");
         fBucket.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         collection = hardwareMap.crservo.get("collection");
@@ -44,23 +45,23 @@ public class Auto1 extends LinearOpMode{
         lift.setDirection(DcMotor.Direction.FORWARD);
         fBucket.setDirection(DcMotor.Direction.FORWARD);
 
-
-        // Tell the driver that initialization is complete.
-        telemetry.addData("Status", "Initialized");
-        telemetry.addData("left", left.getPower());
-        telemetry.addData("right", right.getPower());
-        telemetry.addData("lift", lift.getPower());
-        telemetry.addData("collection", collection.getPower());
-        telemetry.addData("fBucket", fBucket.getPower());
-
         NormalDriveEncoders drive = new NormalDriveEncoders(left, right, telemetry, .3f);
         waitForStart();
+        fBucket.setPower(-.75);
+
+        try {wait(250);} catch (Exception e) {}
+        fBucket.setPower(0);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setTargetPosition((int)(1180 * 2.9));
         lift.setPower(.75);
-        wait(2000);
+        while (lift.isBusy()){}
         lift.setPower(0);
-        drive.forward(6);
-        lift.setPower(-.75);
-        wait(2000);
+        drive.forward(1);
+        lift.setTargetPosition(0);
+        while(lift.getCurrentPosition() > lift.getTargetPosition()) {
+            lift.setPower(.75);
+        }
+        while(lift.isBusy()){}
         lift.setPower(0);
 
     }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.cole;
+package org.firstinspires.ftc.teamcode.nathan;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.teamcode.noah.NormalDriveEncoders;
+import org.firstinspires.ftc.teamcode.nathan.NormalDriveEncoders;
 
 
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
  * Finished by student on 11/15/18.
  */
 
-@Autonomous(name="Auto Sampling Webcam")
+@Autonomous(name="Auto Sampling Webcam *******")
 public class AutoSamplingWebcam extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";

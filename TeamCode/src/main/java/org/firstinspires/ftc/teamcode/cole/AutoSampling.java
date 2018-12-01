@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.teamcode.noah.NormalDriveEncoders;
+import org.firstinspires.ftc.teamcode.nathan.NormalDriveEncoders;
 
 import java.util.List;
 
@@ -19,7 +19,6 @@ import java.util.List;
  */
 
 @Autonomous(name="Sampling")
-@Disabled
 public class AutoSampling extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
@@ -29,9 +28,7 @@ public class AutoSampling extends LinearOpMode {
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;
 
-    private DcMotor left;
-    private DcMotor right;
-    private NormalDriveEncoders drive = new NormalDriveEncoders(left, right, telemetry, 0.5f);
+    private XOmniDrive drive;
 
     @Override
     public void runOpMode() {
@@ -43,14 +40,7 @@ public class AutoSampling extends LinearOpMode {
             telemetry.addData("Sorry!", "This device is not compatible with TFOD");
         }
 
-        left = hardwareMap.get(DcMotor.class, "left");
-        right = hardwareMap.get(DcMotor.class, "right");
-
-        telemetry.addData("Left", left.getConnectionInfo());
-        telemetry.addData("right", right.getConnectionInfo());
-        telemetry.update();
-
-        drive = new NormalDriveEncoders(left, right, telemetry, 0.3f);
+        drive = new XOmniDrive(hardwareMap);
 
         waitForStart();
         if (opModeIsActive()) {
@@ -66,6 +56,10 @@ public class AutoSampling extends LinearOpMode {
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
                         telemetry.addData("# Object Detected", updatedRecognitions.size());
+                        for (Recognition recognition : updatedRecognitions) {
+                            telemetry.addData("x-pos", recognition.getLeft());
+                        }
+                        telemetry.update();
                         if (updatedRecognitions.size() == 3) {
                             int goldMineralX = -1;
                             int silverMineral1X = -1;
@@ -80,19 +74,16 @@ public class AutoSampling extends LinearOpMode {
                                 }
                             }
                             if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-                                left.setDirection(DcMotorSimple.Direction.REVERSE);
-                                left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                                right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                                 if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
                                     telemetry.addData("Gold Mineral Position", "Left");
-                                    drive.pivotLeft(45);
+                                    //drive.cClockwise(45);
                                 } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
                                     telemetry.addData("Gold Mineral Position", "Right");
-                                    drive.pivotRight(45);
+                                    //drive.clockwise(45);
                                 } else {
                                     telemetry.addData("Gold Mineral Position", "Center");
                                 }
-                                drive.forward(24);
+                                //drive.forward(24);
                                 telemetry.update();
                                 break;
                             }
