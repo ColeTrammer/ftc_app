@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import static java.lang.Thread.sleep;
 
 public class XOmniDrive {
-    boolean DEBUGGING = false;
+    boolean DEBUGGING = true;
     DcMotor FL,FR,BR,BL,liftP;
     float y,x2,x,deadZone,turnPower,movePower;
     Telemetry telemetry;
@@ -91,10 +91,10 @@ public class XOmniDrive {
         BL = hardwareMap.dcMotor.get("bl");
         BR = hardwareMap.dcMotor.get("br");
 
-        FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         FR.setDirection(DcMotor.Direction.REVERSE);
         BR.setDirection(DcMotor.Direction.REVERSE);
@@ -112,11 +112,16 @@ public class XOmniDrive {
     * @param    gamepad2 the second controller being used for the robot
     */
     public void run(Gamepad gamepad1, Gamepad gamepad2){
+        FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         x = gamepad1.left_stick_x;
         if(Math.abs(x) < deadZone)x = 0;
         y = -gamepad1.left_stick_y;
         if(Math.abs(y) < deadZone)y = 0;
-        x2 = gamepad1.right_stick_x;
+        x2 = -gamepad1.right_stick_x;
         if(Math.abs(x2) < deadZone)x2 = 0;
         FL.setPower((x+y) * movePower + x2 * turnPower);
         FR.setPower((-x+y) * movePower - x2 * turnPower);
@@ -137,7 +142,7 @@ public class XOmniDrive {
         if(Math.abs(x) < deadZone)x = 0;
         y = -gamepad1.left_stick_y;
         if(Math.abs(y) < deadZone)y = 0;
-        x2 = gamepad1.right_stick_x;
+        x2 = -gamepad1.right_stick_x;
         if(Math.abs(x2) < deadZone)x2 = 0;
         float dpadPower = .6f;
         FL.setPower((x*Math.abs(x)+y *Math.abs(y)) * movePower + GetPower(lookupTable,x2)
@@ -181,6 +186,24 @@ public class XOmniDrive {
     }
 
     //Auto
+
+    public void motorTest() {
+        FL.setPower(1);
+        try {sleep(1000);} catch (Exception e) {}
+        FL.setPower(0);
+
+        BL.setPower(1);
+        try {sleep(1000);} catch (Exception e) {}
+        BL.setPower(0);
+
+        BR.setPower(1);
+        try {sleep(1000);} catch (Exception e) {}
+        BR.setPower(0);
+
+        FR.setPower(1);
+        try {sleep(1000);} catch (Exception e) {}
+        FR.setPower(0);
+    }
 
       /**
     * moves the robot forward a variable amount of inches

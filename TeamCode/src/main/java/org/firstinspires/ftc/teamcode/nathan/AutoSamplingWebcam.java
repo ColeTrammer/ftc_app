@@ -31,7 +31,7 @@ public class AutoSamplingWebcam extends LinearOpMode {
 
     private DcMotor left;
     private DcMotor right;
-    private NormalDriveEncoders drive = new NormalDriveEncoders(left, right, telemetry, 0.5f);
+    private NormalDriveEncoders drive = new NormalDriveEncoders(left, right, telemetry, 0.5f, this);
 
     @Override
     public void runOpMode() {
@@ -50,7 +50,7 @@ public class AutoSamplingWebcam extends LinearOpMode {
         telemetry.addData("right", right.getConnectionInfo());
         telemetry.update();
 
-        drive = new NormalDriveEncoders(left, right, telemetry, 0.3f);
+        drive = new NormalDriveEncoders(left, right, telemetry, 0.3f, this);
 
         waitForStart();
         if (opModeIsActive()) {

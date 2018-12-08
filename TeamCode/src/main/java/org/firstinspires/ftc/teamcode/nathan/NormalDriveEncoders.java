@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.nathan;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -15,13 +16,15 @@ public class NormalDriveEncoders {
 
     private DcMotor left, right;
     private Telemetry telemetry;
+    private LinearOpMode opmode;
     float power;
     
-    public NormalDriveEncoders(DcMotor left, DcMotor right, Telemetry telemetry, float power) {
+    public NormalDriveEncoders(DcMotor left, DcMotor right, Telemetry telemetry, float power, LinearOpMode opmode) {
         this.left = left;
         this.right = right;
         this.telemetry = telemetry;
         this.power = power;
+        this.opmode = opmode;
     }
 
     public void forward(float in) {
@@ -34,7 +37,7 @@ public class NormalDriveEncoders {
         right.setTargetPosition(pos);
         right.setPower(power);
         left.setPower(power);
-        while(left.isBusy() &&right.isBusy())
+        while(left.isBusy() &&right.isBusy() && opmode.opModeIsActive())
         {
             telemetry.addData("Motor Encoder", "Left Pos: " + left.getCurrentPosition());
             telemetry.addLine();
@@ -69,7 +72,7 @@ public class NormalDriveEncoders {
         right.setTargetPosition(-pos);
         left.setPower(power);
         right.setPower(power);
-        while(left.isBusy() && right.isBusy())
+        while(left.isBusy() && right.isBusy() && opmode.opModeIsActive())
         {
             telemetry.addData("Motor Encoder", "Left Pos: " + left.getCurrentPosition());
             telemetry.addLine();
