@@ -117,7 +117,7 @@ public class nathanteleop extends OpMode
         // - This uses basic math to combine motions and is easier to drive straight.
         double forward =  gamepad1.left_stick_y;
         double turn  =  gamepad1.right_stick_x;
-        double collect = gamepad2.left_stick_y;
+        double collect = gamepad2.left_trigger - gamepad2.right_trigger;
         double fBPower = gamepad2.right_stick_y;
         left.setPower(Range.clip(forward - turn, -1.0, 1.0));
         right.setPower(Range.clip(forward + turn, -1.0, 1.0));
@@ -125,10 +125,10 @@ public class nathanteleop extends OpMode
         fBucket.setPower(0.5*(Range.clip(fBPower, -1.0, 1.0)));
 
 
-        if(gamepad2.dpad_up)
-            lift.setPower(1);
-        else if(gamepad2.dpad_down)
+        if(gamepad2.left_stick_y >0.2)
             lift.setPower(-1);
+        else if(gamepad2.left_stick_y<-0.2)
+            lift.setPower(1);
         else
             lift.setPower(0);
 
@@ -137,10 +137,10 @@ public class nathanteleop extends OpMode
 //            bucket.setPosition(2);
 //        if (gamepad2.b)
 //            bucket.setPosition(0);
-        if (gamepad2.b)
-            bucket.setPower(1);
-        else if (gamepad2.a)
+        if (gamepad2.dpad_up)
             bucket.setPower(-1);
+        else if (gamepad2.dpad_down)
+            bucket.setPower(1);
         else
             bucket.setPower(0);
         // Tank Mode uses one stick to control each wheel.
