@@ -92,13 +92,24 @@ public class CRServoTest extends OpMode
 
         // POV Mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
+
         double forward =  gamepad1.left_stick_y;
         double turn  =  gamepad1.right_stick_x;
-        double collect = -gamepad2.left_trigger + gamepad2.right_trigger;
-        double fBPower = gamepad2.right_stick_y;
-        collection.setPower(0.75*(Range.clip(collect, -1.0, 1.0)));
-
-
+        //double collect = -gamepad2.left_trigger + gamepad2.right_trigger;
+        //double fBPower = gamepad2.right_stick_y;
+        //collection.setPower(0.75*(Range.clip(collect, -1.0, 1.0)));
+        if(gamepad1.dpad_up)
+        {
+            collection.setPower(1);
+        }
+        else if(gamepad1.dpad_down)
+        {
+            collection.setPower(-1);
+        }
+        else
+        {
+            collection.setPower(0);
+        }
 
 
 //        if (gamepad2.a)

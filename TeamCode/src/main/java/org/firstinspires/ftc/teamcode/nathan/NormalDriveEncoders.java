@@ -32,12 +32,12 @@ public class NormalDriveEncoders {
         int pos = (int)((encoder * in)/(4 * Math.PI));
 
         left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        left.setTargetPosition(pos);
         right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        left.setTargetPosition(pos);
         right.setTargetPosition(pos);
         right.setPower(power);
         left.setPower(power);
-        while(left.isBusy() &&right.isBusy() && opmode.opModeIsActive())
+        while(left.isBusy() && right.isBusy() && opmode.opModeIsActive())
         {
             telemetry.addData("Motor Encoder", "Left Pos: " + left.getCurrentPosition());
             telemetry.addLine();

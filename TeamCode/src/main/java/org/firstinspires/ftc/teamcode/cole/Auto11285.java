@@ -28,7 +28,7 @@ public class Auto11285 extends LinearOpMode {
 //        DcMotor br = hardwareMap.get(DcMotor.class, "br");
 //        DcMotor fr = hardwareMap.get(DcMotor.class, "fr");
 //
-//        try {
+//        try {LinearOpMode
 //            fl.setPower(1);
 //            sleep(1000);
 //            fl.setPower(0);
@@ -42,11 +42,11 @@ public class Auto11285 extends LinearOpMode {
 //            sleep(1000);
 //            fr.setPower(0);
 //        } catch (Exception e) {}
-        lift.setPower(0.75f);
-        try {
-            wait(2000);
-        } catch (Exception e) {}
-        lift.setPower(0);
+//        lift.setPower(0.75f);
+//        try {
+//            wait(2000);
+//        } catch (Exception e) {}
+//        lift.setPower(0);
 
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -71,10 +71,10 @@ public class Auto11285 extends LinearOpMode {
         }
         lift.setPower(0);
 
-        lift.setPower(-0.75f);
-        try {
-            wait(2000);
-        } catch (Exception e) {}
-        lift.setPower(0);
+//        lift.setPower(-0.75f);
+//        try {
+//            wait(2000);
+//        } catch (Exception e) {}
+//        lift.setPower(0);
     }
 }

@@ -43,14 +43,25 @@ public class AutoCraterSideNoSampling extends LinearOpMode{
         //lift.setZeroPowerBehavior(DcMotor.ZeroPowerBeh/xreversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         left.setDirection(DcMotor.Direction.FORWARD);
-        right.setDirection(DcMotor.Direction.REVERSE);
+        right.setDirection(DcMotor.Direction.FORWARD);
         //lift.setDirection(DcMotor.Direction.FORWARD);
         //fBucket.setDirection(DcMotor.Direction.FORWARD);
 
         NormalDriveEncoders drive = new NormalDriveEncoders(left, right, telemetry, .7f, this);
+        telemetry.addData("Left Encoder", left.getCurrentPosition());
+        telemetry.addData("Right Encoder", right.getCurrentPosition());
+        telemetry.addData("test", getRuntime());
         waitForStart();
         runtime.reset();
-
+        left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        drive.forward((int)(4*Math.PI));
+//        left.setTargetPosition(1120);
+//        right.setTargetPosition(1120);
+//        left.setPower(.5);
+//        right.setPower(.5);
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drive.pivotLeft(58);
@@ -61,7 +72,7 @@ public class AutoCraterSideNoSampling extends LinearOpMode{
         drive.forward(60);
         //TODO deploy marker
         drive.forward(-100);
-
+        telemetry.update();
 //        fBucket.setPower(-.75);
 //        while (runtime.milliseconds() < 250) {}
 //

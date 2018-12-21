@@ -53,7 +53,7 @@ public class AutoDepotSideNoSampling extends LinearOpMode{
 
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        drive.pivotLeft(55);
+        drive.pivotLeft(58);
         drive.forward(45);
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
