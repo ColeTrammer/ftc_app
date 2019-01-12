@@ -40,14 +40,6 @@ public class AutoCraterSideNoLatchingNoSamplingV2 extends LinearOpMode{
     private TFObjectDetector tfod;
     @Override
     public void runOpMode() {
-        initVuforia();
-
-        if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
-            initTfod();
-        } else {
-            telemetry.addData("Sorry!", "This device is not compatible with TFOD");
-        }
-        telemetry.addData("Status", "Initialized");
 
         telemetry.addData("Status", "Initialized");
 
@@ -75,7 +67,7 @@ public class AutoCraterSideNoLatchingNoSamplingV2 extends LinearOpMode{
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         left.setDirection(DcMotor.Direction.REVERSE);
-        right.setDirection(DcMotor.Direction.REVERSE);
+        right.setDirection(DcMotor.Direction.FORWARD);
         //lift.setDirection(DcMotor.Direction.FORWARD);
         // fBucket.setDirection(DcMotor.Direction.FORWARD);
 
@@ -97,12 +89,6 @@ public class AutoCraterSideNoLatchingNoSamplingV2 extends LinearOpMode{
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setTargetPosition((int)(1180 * 2.9));
-        lift.setPower(.75);
-        while (lift.isBusy()){}
-        lift.setPower(0);
         drive.forward(10);
         extension.setTargetPosition(1180 * 3);
         extension.setPower(.25);
@@ -111,87 +97,4 @@ public class AutoCraterSideNoLatchingNoSamplingV2 extends LinearOpMode{
 
         }
 
-
-    private void Sample(NormalDriveEncoders drive)
-    {
-        while (opModeIsActive()) {
-            if (tfod != null) {
-                // getUpdatedRecognitions() will return null if no new information is available since
-                // the last time that call was made.
-                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                if (updatedRecognitions != null) {
-                    telemetry.addData("# Object Detected", updatedRecognitions.size());
-                    if (updatedRecognitions.size() == 3) {
-                        int goldMineralX = -1;
-                        int silverMineral1X = -1;
-                        int silverMineral2X = -1;
-                        for (Recognition recognition : updatedRecognitions) {
-                            if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                                goldMineralX = (int) recognition.getLeft();
-                            } else if (silverMineral1X == -1) {
-                                silverMineral1X = (int) recognition.getLeft();
-                            } else {
-                                silverMineral2X = (int) recognition.getLeft();
-                            }
-                        }
-                        telemetry.addData("GoldX", goldMineralX);
-                        telemetry.addData("Silver1X", silverMineral1X);
-                        telemetry.addData("Silver2X", silverMineral2X);
-                        telemetry.update();
-//                           telemetry.addData("Silver1X", "Initialized");     if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-//                           telemetry.addData("Silver2X", "Initialized");         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//                            right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                            if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                                telemetry.addData("Gold Mineral Position", "Left");
-                                drive.pivotLeft(45);
-                                drive.forward(12);
-                                drive.pivotRight(45);
-                                drive.forward(12);
-                                path = 1;
-
-                            } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-                                telemetry.addData("Gold Mineral Position", "Right");
-                                drive.pivotRight(45);
-                                drive.forward(12);
-                                drive.pivotLeft(45);
-                                drive.forward(12);
-                                path = 3;
-                            } else {
-                                telemetry.addData("Gold Mineral Position", "Center");
-                                drive.forward(12);
-                                path = 2;
-                            }
-                           telemetry.update();
-                           break;
-                        }
-                    }
-                }
-            }
-        }
-
-    private void initVuforia() {
-        /*
-         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
-         */
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
-
-        parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
-
-        //  Instantiate the Vuforia engine
-        vuforia = ClassFactory.getInstance().createVuforia(parameters);
-
-        // Loading trackables is not necessary for the Tensor Flow Object Detection engine.
-    }
-
-    /**
-     * Initialize the Tensor Flow Object Detection engine.
-     */
-    private void initTfod() {
-        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
-                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
-        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
-    }
 }
