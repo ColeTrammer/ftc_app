@@ -166,7 +166,7 @@ public class TeleOp5135_V3 extends OpMode
         {
             extension.setPower(.75);
         }
-        else if(gamepad2.left_bumper)
+        else if(gamepad1.left_bumper)
         {
             extension.setPower(-.75);
         }
