@@ -29,7 +29,7 @@ public class TeleOp5135_V3 extends OpMode
     private DcMotor left = null;
     private DcMotor right = null;
     private DcMotor lift = null;
-    private DcMotor wrist = null;
+    private CRServo wrist = null;
     //private DcMotor fBucket = null;
     private CRServo collection = null;
     private CRServo bucket = null;
@@ -53,7 +53,7 @@ public class TeleOp5135_V3 extends OpMode
         // step (using the FTC Robot Controller app on the phone).
         left = hardwareMap.get(DcMotor.class, "left");
         right = hardwareMap.get(DcMotor.class, "right");
-        wrist = hardwareMap.get(DcMotor.class, "wrist");
+        wrist = hardwareMap.crservo.get("wrist");
         extension = hardwareMap.get(DcMotor.class, "extension");
         lift = hardwareMap.get(DcMotor.class, "lift");
 
@@ -67,7 +67,6 @@ public class TeleOp5135_V3 extends OpMode
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         extension.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        wrist.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         collection = hardwareMap.crservo.get("collection");
         //lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // Most robots need the motor on one side to be reversed to drive forward
@@ -137,9 +136,9 @@ public class TeleOp5135_V3 extends OpMode
         double wristPower = gamepad1.left_trigger - gamepad1.right_trigger;
         left.setPower(Range.clip(forward - turn, -1.0, 1.0));
         right.setPower(Range.clip(forward + turn, -1.0, 1.0));
-        collection.setPower(0.75*(Range.clip(collect, -1.0, 1.0)));
+        collection.setPower(0.7*(Range.clip(collect, -1.0, 1.0)));
       //  fBucket.setPower(0.5*(Range.clip(fBPower, -1.0, 1.0)))
-        wrist.setPower(0.5 * (Range.clip(wristPower, -1, 1)));
+        wrist.setPower(0.8*(Range.clip(wristPower, -1, 1)));
 
 
         if(gamepad2.left_stick_y >0.2)
@@ -156,19 +155,19 @@ public class TeleOp5135_V3 extends OpMode
 //            bucket.setPosition(0);
 
         if (gamepad2.dpad_up)
-            bucket.setPower(-.75);
+            bucket.setPower(-.8);
         else if (gamepad2.dpad_down)
-            bucket.setPower(.75);
+            bucket.setPower(.8);
         else
             bucket.setPower(0);
 
         if(gamepad1.right_bumper)
         {
-            extension.setPower(.75);
+            extension.setPower(.9);
         }
         else if(gamepad1.left_bumper)
         {
-            extension.setPower(-.75);
+            extension.setPower(-.9);
         }
         else extension.setPower(0);
 
