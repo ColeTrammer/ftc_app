@@ -142,9 +142,9 @@ public class TeleOp5135_V3 extends OpMode
 
 
         if(gamepad2.left_stick_y >0.2)
-            lift.setPower(-1);
-        else if(gamepad2.left_stick_y<-0.2)
             lift.setPower(1);
+        else if(gamepad2.left_stick_y<-0.2)
+            lift.setPower(-1);
         else
             lift.setPower(0);
 
