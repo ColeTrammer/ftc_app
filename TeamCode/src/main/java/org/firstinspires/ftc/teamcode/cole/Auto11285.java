@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by student on 11/29/18.
  */
 
-@Autonomous(name="Auto 11285")
+@Autonomous(name="Auto 11285", group="11285")
 public class Auto11285 extends LinearOpMode {
     DcMotor lift;
 
