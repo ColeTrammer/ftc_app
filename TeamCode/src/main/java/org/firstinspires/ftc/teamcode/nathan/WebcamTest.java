@@ -10,8 +10,6 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.teamcode.nathan.NormalDriveEncoders;
-
 
 import java.util.List;
 
@@ -19,19 +17,15 @@ import java.util.List;
  * Finished by student on 11/15/18.
  */
 
-//@Autonomous(name="Auto Sampling Webcam *******")
-public class AutoSamplingWebcam extends LinearOpMode {
+//@Autonomous(name="Webcam Test")
+public class WebcamTest extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
-    private static final String VUFORIA_KEY = "Acbhfjv/////AAAAGQwVGIAmv0V3nNH7nrtPGJVSuirk278Uo+j+394hRfZGLNmucewzhlA4ux8ZUQz0OpL1mJuPW+lKbjippfmpGiiXsvpnm2p6prlsNHzZNthjThZyFArOkXDkjL5bYlVT3zlo3oc+XNg/W4rBdXHeBpw6OgO1a7D0xhGHkqaihUWqeESvWtcH+uSJXha/umtRGu0DIPRW0n4a3Z0cjbNzhicHvrGOWuwuVhyua1IcrOqed3/bTdts+JhuG3TakwFBb1GpIkWXNziiorUUXVstPVNVrty3AnesNZ11gsJyHVu3YCKi//itjkqr/6xmINr4LDrwdf1Pg2e9L9iT9qtFWjrrnEQYGzxgpnrj0+PvzWWw";
+    private static final String VUFORIA_KEY = " ATiuXRv/////AAABmX/tug8P6EteuRJz2PTAi6JMBeLa9Te+gCRaTBPeDZ77UloArIT7REsZPIosl4YG0JLDyl4+yj3lpzfzKIkpOQNRfsgfAjS6tTbwBRHJsnStRDKMwb4Fj5l3rTCxB8qHn8GW45O1BGLuAROQ+DrNs26ktJV3HTEr6N4XYXSdDD3UX+2Yj8u4CmJ6xk4kY0JdX/Kklw4Ai0Mba5vFviXXjue5UMQRZTIy45y2h8UpEcSFeqiLLKdGktA5qL5NufN0/KZXI3EQNHjmrAi52oqWiO7JBAolc9uC7B910YGiGI6E0a/KJAvxLY6zlKuXI+XkQP9WgGwfXUZhU8nTyKnEDi4HY0v/+uSmKfcyIrDWf2KW";
 
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;
-
-    private DcMotor left;
-    private DcMotor right;
-    private NormalDriveEncoders drive = new NormalDriveEncoders(left, right, telemetry, 0.5f, this);
 
     @Override
     public void runOpMode() {
@@ -43,14 +37,7 @@ public class AutoSamplingWebcam extends LinearOpMode {
             telemetry.addData("Sorry!", "This device is not compatible with TFOD");
         }
 
-        left = hardwareMap.get(DcMotor.class, "left");
-        right = hardwareMap.get(DcMotor.class, "right");
-
-        telemetry.addData("Left", left.getConnectionInfo());
-        telemetry.addData("right", right.getConnectionInfo());
         telemetry.update();
-
-        drive = new NormalDriveEncoders(left, right, telemetry, 0.3f, this);
 
         waitForStart();
         if (opModeIsActive()) {
@@ -80,21 +67,15 @@ public class AutoSamplingWebcam extends LinearOpMode {
                                 }
                             }
                             if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-                                left.setDirection(DcMotorSimple.Direction.REVERSE);
-                                left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                                right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                                 if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
                                     telemetry.addData("Gold Mineral Position", "Left");
-                                    drive.pivotLeft(45);
                                 } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
                                     telemetry.addData("Gold Mineral Position", "Right");
-                                    drive.pivotRight(45);
                                 } else {
                                     telemetry.addData("Gold Mineral Position", "Center");
                                 }
-                                drive.forward(24);
                                 telemetry.update();
-                                break;
+
                             }
                         }
                     }

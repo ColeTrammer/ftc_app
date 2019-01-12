@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -19,8 +17,8 @@ import java.util.List;
 /**
  * Created by student on 11/29/18.
  */
-@Autonomous(name="AutoDepotSideWithSampling")
-public class AutoDepotSideWithSampling extends LinearOpMode{
+@Autonomous(name="AutoCraterSideWithSamplingAndLatchingV2")
+public class AutoCraterSideWithSamplingV2 extends LinearOpMode{
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor left = null;
     private DcMotor right = null;
@@ -106,24 +104,12 @@ public class AutoDepotSideWithSampling extends LinearOpMode{
         lift.setPower(.75);
         while (lift.isBusy()){}
         lift.setPower(0);
+        lift.setTargetPosition(0);
+        lift.setPower(.75);
+        while(lift.isBusy()){}
+        lift.setPower(0);
+
         Sample(drive);
-        collection.setPower(.25);
-        sleep(500);
-        collection.setPower(0);
-        switch (path) {
-            case 1:
-                drive.pivotRight(90);
-                break;
-            case 2:
-                drive.pivotRight(135);
-                break;
-            case 3:
-                drive.pivotRight(180);
-                break;
-
-        }
-
-        drive.forward(60);
         extension.setTargetPosition(1180 * 3);
         extension.setPower(.25);
         while(extension.isBusy()){}
@@ -168,7 +154,6 @@ public class AutoDepotSideWithSampling extends LinearOpMode{
                                 drive.pivotRight(45);
                                 drive.forward(12);
                                 path = 1;
-
                             } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
                                 telemetry.addData("Gold Mineral Position", "Right");
                                 drive.pivotRight(45);

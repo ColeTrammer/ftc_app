@@ -17,8 +17,8 @@ import java.util.List;
 /**
  * Created by student on 11/29/18.
  */
-@Autonomous(name="AutoCraterSideWithSampling")
-public class AutoCraterSideNoLatchingNoSampling extends LinearOpMode{
+@Autonomous(name="AutoCraterSideNoLatchingNoSamplingV2")
+public class AutoCraterSideNoLatchingNoSamplingV2 extends LinearOpMode{
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor left = null;
     private DcMotor right = null;

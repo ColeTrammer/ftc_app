@@ -21,8 +21,8 @@ import java.util.List;
 /**
  * Created by student on 11/29/18.
  */
-@Autonomous(name="AutoCraterSideV2")
-public class AutoCraterSideV2 extends LinearOpMode{
+//@Autonomous(name="AutoCraterSideV1")
+public class AutoCraterSide extends LinearOpMode{
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor left = null;
     private DcMotor right = null;

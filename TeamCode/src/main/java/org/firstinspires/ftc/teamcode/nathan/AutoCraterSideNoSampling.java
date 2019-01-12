@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Created by student on 11/29/18.
  */
-@Autonomous(name="AutoCraterSideNoSampling")
+//@Autonomous(name="AutoCraterSideNoSampling")
 public class AutoCraterSideNoSampling extends LinearOpMode{
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor left = null;

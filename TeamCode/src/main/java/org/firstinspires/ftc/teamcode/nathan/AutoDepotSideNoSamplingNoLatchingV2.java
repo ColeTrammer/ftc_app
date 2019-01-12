@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Created by student on 11/29/18.
  */
-@Autonomous(name="AutoDepotSideNoSampling")
-public class AutoDepotSideNoSamplingNoLatching extends LinearOpMode{
+@Autonomous(name="AutoDepotSideNoSamplingNoLatchingV2")
+public class AutoDepotSideNoSamplingNoLatchingV2 extends LinearOpMode{
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor left = null;
     private DcMotor right = null;

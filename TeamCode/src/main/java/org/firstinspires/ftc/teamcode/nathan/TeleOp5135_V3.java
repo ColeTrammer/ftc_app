@@ -138,8 +138,8 @@ public class TeleOp5135_V3 extends OpMode
         left.setPower(Range.clip(forward - turn, -1.0, 1.0));
         right.setPower(Range.clip(forward + turn, -1.0, 1.0));
         collection.setPower(0.75*(Range.clip(collect, -1.0, 1.0)));
-      //  fBucket.setPower(0.5*(Range.clip(fBPower, -1.0, 1.0)));
-        bucket.setPower(0.75 * (Range.clip(wristPower, -1, 1)));
+      //  fBucket.setPower(0.5*(Range.clip(fBPower, -1.0, 1.0)))
+        wrist.setPower(0.5 * (Range.clip(wristPower, -1, 1)));
 
 
         if(gamepad2.left_stick_y >0.2)
@@ -156,19 +156,19 @@ public class TeleOp5135_V3 extends OpMode
 //            bucket.setPosition(0);
 
         if (gamepad2.dpad_up)
-            bucket.setPower(-1);
+            bucket.setPower(-.75);
         else if (gamepad2.dpad_down)
-            bucket.setPower(1);
+            bucket.setPower(.75);
         else
             bucket.setPower(0);
 
         if(gamepad1.right_bumper)
         {
-            extension.setPower(1);
+            extension.setPower(.75);
         }
         else if(gamepad2.left_bumper)
         {
-            extension.setPower(-1);
+            extension.setPower(-.75);
         }
         else extension.setPower(0);
 
