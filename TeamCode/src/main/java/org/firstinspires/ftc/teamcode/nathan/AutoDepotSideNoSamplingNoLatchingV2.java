@@ -63,13 +63,12 @@ public class AutoDepotSideNoSamplingNoLatchingV2 extends LinearOpMode{
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drive.forward(40);
         collection.setPower(.5);
-        sleep(500);
+        sleep(1000);
         collection.setPower(0);
         drive.pivotRight(135);
         drive.forward(60);
-        extension.setTargetPosition(1180 * 3);
         extension.setPower(.25);
-        while(extension.isBusy()){}
+        sleep(2000);
         extension.setPower(0);
 
 
