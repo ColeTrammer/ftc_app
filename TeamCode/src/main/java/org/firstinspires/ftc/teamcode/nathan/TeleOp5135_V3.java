@@ -71,8 +71,8 @@ public class TeleOp5135_V3 extends OpMode
         //lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
-        left.setDirection(DcMotor.Direction.REVERSE);
-        right.setDirection(DcMotor.Direction.FORWARD);
+        left.setDirection(DcMotor.Direction.FORWARD);
+        right.setDirection(DcMotor.Direction.REVERSE);
         //lift.setDirection(DcMotor.Direction.FORWARD);
        // fBucket.setDirection(DcMotor.Direction.FORWARD);
 
@@ -155,9 +155,9 @@ public class TeleOp5135_V3 extends OpMode
 //            bucket.setPosition(0);
 
         if (gamepad2.dpad_up)
-            bucket.setPower(-.8);
+            bucket.setPower(-1);
         else if (gamepad2.dpad_down)
-            bucket.setPower(.8);
+            bucket.setPower(1);
         else
             bucket.setPower(0);
 
