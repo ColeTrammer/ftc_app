@@ -39,6 +39,7 @@ public class AutoDepotSideNoSampling extends LinearOpMode{
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // hello world
         //collection = hardwareMap.crservo.get("collection");
         //lift.setZeroPowerBehavior(DcMotor.ZeroPowerBeh/xreversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
