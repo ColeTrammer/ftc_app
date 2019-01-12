@@ -25,7 +25,7 @@ public class AutoDepotSideWithSamplingV2 extends LinearOpMode{
     private DcMotor left = null;
     private DcMotor right = null;
     private DcMotor lift = null;
-    private DcMotor wrist = null;
+    private CRServo wrist = null;
     //private DcMotor fBucket = null;
     private CRServo collection = null;
     private CRServo bucket = null;
@@ -58,7 +58,7 @@ public class AutoDepotSideWithSamplingV2 extends LinearOpMode{
         // step (using the FTC Robot Controller app on the phone).
         left = hardwareMap.get(DcMotor.class, "left");
         right = hardwareMap.get(DcMotor.class, "right");
-        wrist = hardwareMap.get(DcMotor.class, "wrist");
+        wrist = hardwareMap.crservo.get("wrist");
         extension = hardwareMap.get(DcMotor.class, "extension");
         lift = hardwareMap.get(DcMotor.class, "lift");
 
@@ -72,7 +72,6 @@ public class AutoDepotSideWithSamplingV2 extends LinearOpMode{
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         extension.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        wrist.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         collection = hardwareMap.crservo.get("collection");
         //lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // Most robots need the motor on one side to be reversed to drive forward
