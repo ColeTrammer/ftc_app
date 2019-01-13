@@ -89,8 +89,8 @@ public class AutoCraterSideNoLatchingNoSamplingV2 extends LinearOpMode{
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        drive.forward(30);
-        extension.setPower(.25);
+        drive.forward(24);
+        extension.setPower(-.9);
         sleep(2000);
         extension.setPower(0);
 

@@ -155,9 +155,9 @@ public class TeleOp5135_V3 extends OpMode
 //            bucket.setPosition(0);
 
         if (gamepad2.dpad_up)
-            bucket.setPower(-1);
+            bucket.setPower(-.9);
         else if (gamepad2.dpad_down)
-            bucket.setPower(1);
+            bucket.setPower(.9);
         else
             bucket.setPower(0);
 

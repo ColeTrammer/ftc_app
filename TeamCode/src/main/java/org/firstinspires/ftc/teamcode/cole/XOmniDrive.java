@@ -117,7 +117,7 @@ public class XOmniDrive {
         BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        x = gamepad1.left_stick_x;
+        x = -gamepad1.left_stick_x;
         if(Math.abs(x) < deadZone)x = 0;
         y = -gamepad1.left_stick_y;
         if(Math.abs(y) < deadZone)y = 0;

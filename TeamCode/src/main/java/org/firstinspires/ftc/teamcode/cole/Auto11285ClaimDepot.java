@@ -19,7 +19,7 @@ public class Auto11285ClaimDepot extends LinearOpMode {
         drive.telemetry = telemetry;
         waitForStart();
 
-        drive.forward(30 * (float) Math.sqrt(2));
+        drive.forward(60 * (float) Math.sqrt(2));
         claim.setPosition(1);
         for (int i = 0; i < 5; i++) {
             drive.cClockwise(3);
