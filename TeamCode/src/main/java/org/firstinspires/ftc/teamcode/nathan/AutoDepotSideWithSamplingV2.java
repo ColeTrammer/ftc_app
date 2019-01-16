@@ -76,7 +76,7 @@ public class AutoDepotSideWithSamplingV2 extends LinearOpMode{
         //lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
-        left.setDirection(DcMotor.Direction.REVERSE);
+        left.setDirection(DcMotor.Direction.FORWARD);
         right.setDirection(DcMotor.Direction.REVERSE);
         //lift.setDirection(DcMotor.Direction.FORWARD);
         // fBucket.setDirection(DcMotor.Direction.FORWARD);
@@ -101,15 +101,18 @@ public class AutoDepotSideWithSamplingV2 extends LinearOpMode{
 
 
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setTargetPosition((int)(1180 * 2.9));
-        lift.setPower(.75);
-        while (lift.isBusy()){}
-        lift.setPower(0);
-        lift.setTargetPosition(0);
-        lift.setPower(.75);
-        while(lift.isBusy()){}
-        lift.setPower(0);
+//        lift.setTargetPosition((int)(1180 * 2.9));
+//        lift.setPower(-.75);
+//        sleep(500);
+//        lift.setPower(0);
+//        lift.setTargetPosition(0);
+//        lift.setPower(.75);
+//        while(lift.isBusy()){}
+//        lift.setPower(0);
         Sample(drive);
+        wrist.setPower(.8);
+        sleep(500);
+        wrist.setPower(0);
         collection.setPower(.25);
         sleep(500);
         collection.setPower(0);
@@ -125,18 +128,17 @@ public class AutoDepotSideWithSamplingV2 extends LinearOpMode{
                 break;
 
         }
-
-        drive.forward(60);
-        extension.setTargetPosition(1180 * 3);
-        extension.setPower(.25);
-        while(extension.isBusy()){}
-        extension.setPower(0);
+//
+//        drive.forward(60);
+//        extension.setTargetPosition(1180 * 3);
+//        extension.setPower(.25);
+//        while(extension.isBusy()){}
+//        extension.setPower(0);
 
         }
 
 
-    private void Sample(NormalDriveEncoders drive)
-    {
+    private void Sample(NormalDriveEncoders drive) {
         while (opModeIsActive()) {
             if (tfod != null) {
                 // getUpdatedRecognitions() will return null if no new information is available since
@@ -164,33 +166,34 @@ public class AutoDepotSideWithSamplingV2 extends LinearOpMode{
 //                           telemetry.addData("Silver1X", "Initialized");     if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
 //                           telemetry.addData("Silver2X", "Initialized");         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //                            right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                            if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                                telemetry.addData("Gold Mineral Position", "Left");
+                        if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
+                            telemetry.addData("Gold Mineral Position", "Left");
                                 drive.pivotLeft(45);
-                                drive.forward(12);
+                                drive.forward(-12);
                                 drive.pivotRight(45);
-                                drive.forward(12);
+                                drive.forward(-12);
                                 path = 1;
 
-                            } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-                                telemetry.addData("Gold Mineral Position", "Right");
+                        } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
+                            telemetry.addData("Gold Mineral Position", "Right");
                                 drive.pivotRight(45);
-                                drive.forward(12);
+                                drive.forward(-12);
                                 drive.pivotLeft(45);
-                                drive.forward(12);
+                                drive.forward(-12);
                                 path = 3;
-                            } else {
-                                telemetry.addData("Gold Mineral Position", "Center");
-                                drive.forward(12);
+                        } else {
+                            telemetry.addData("Gold Mineral Position", "Center");
+                                drive.forward(-12);
                                 path = 2;
-                            }
-                           telemetry.update();
-                           break;
                         }
+                        telemetry.update();
+                           break;
                     }
                 }
             }
         }
+    }
+
 
     private void initVuforia() {
         /*
