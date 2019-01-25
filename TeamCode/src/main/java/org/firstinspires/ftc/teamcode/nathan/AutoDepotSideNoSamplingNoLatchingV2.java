@@ -62,11 +62,11 @@ public class AutoDepotSideNoSamplingNoLatchingV2 extends LinearOpMode{
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drive.forward(35);
         wrist.setPower(.8);
-        sleep(300);
-        collection.setPower(.7);
+        sleep(600);
+        collection.setPower(-.7);
         sleep(2000);
         collection.setPower(0);
-
+        wrist.setPower(0);
 
 
 //        fBucket.setPower(-.75);

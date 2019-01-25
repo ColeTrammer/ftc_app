@@ -111,11 +111,11 @@ public class AutoDepotSideWithSamplingV2 extends LinearOpMode{
 //        lift.setPower(0);
         Sample(drive);
         wrist.setPower(.8);
-        sleep(500);
-        wrist.setPower(0);
-        collection.setPower(.25);
-        sleep(500);
+        sleep(600);
+        collection.setPower(-.7);
+        sleep(2000);
         collection.setPower(0);
+        wrist.setPower(0);
         switch (path) {
             case 1:
                 drive.pivotRight(90);
@@ -128,8 +128,7 @@ public class AutoDepotSideWithSamplingV2 extends LinearOpMode{
                 break;
 
         }
-//
-//        drive.forward(60);
+      drive.forward(30);
 //        extension.setTargetPosition(1180 * 3);
 //        extension.setPower(.25);
 //        while(extension.isBusy()){}

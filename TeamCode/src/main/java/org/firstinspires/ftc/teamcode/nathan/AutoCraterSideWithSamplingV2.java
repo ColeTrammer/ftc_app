@@ -90,28 +90,13 @@ public class AutoCraterSideWithSamplingV2 extends LinearOpMode{
 
             runtime.reset();
         }
-        //
-
-
 
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setTargetPosition((int)(1180 * 2.9));
-        lift.setPower(.75);
-        while (lift.isBusy()){}
-        lift.setPower(0);
-        lift.setTargetPosition(0);
-        lift.setPower(.75);
-        while(lift.isBusy()){}
-        lift.setPower(0);
-
         Sample(drive);
-        extension.setTargetPosition(1180 * 3);
-        extension.setPower(.25);
-        while(extension.isBusy()){}
+        extension.setPower(.9);
+        sleep(1000);
         extension.setPower(0);
 
         }
